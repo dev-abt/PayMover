@@ -8,7 +8,7 @@ import pytest
 from unittest.mock import Mock, patch
 from datetime import datetime, date
 
-from paymover.endpoints import ProjectsEndpoint, ClientsEndpoint, TasksEndpoint, TimeEntriesEndpoint
+from paymover.endpoints import ProjectsEndpoint, ClientsEndpoint, TasksEndpoint, EntriesEndpoint
 from paymover.client import PaymoClient
 from paymover.exceptions import PaymoAPIError
 
@@ -287,13 +287,13 @@ class TestTasksEndpoint:
         assert call_args[0][1] == expected_data
 
 
-class TestTimeEntriesEndpoint:
-    """Test cases for TimeEntriesEndpoint."""
+class EntriesEndpoint:
+    """Test cases for EntriesEndpoint."""
     
     def setup_method(self):
         """Set up test fixtures."""
         self.mock_client = Mock(spec=PaymoClient)
-        self.endpoint = TimeEntriesEndpoint(self.mock_client)
+        self.endpoint = EntriesEndpoint(self.mock_client)
     
     def test_list_time_entries(self):
         """Test listing time entries."""
@@ -309,7 +309,7 @@ class TestTimeEntriesEndpoint:
         
         # Assert
         assert result == expected_entries
-        self.mock_client.get.assert_called_once_with("time_entries", params={})
+        self.mock_client.get.assert_called_once_with("entries", params={})
     
     def test_list_time_entries_with_filters(self):
         """Test listing time entries with filters."""
@@ -327,7 +327,7 @@ class TestTimeEntriesEndpoint:
         # Assert
         assert result == expected_entries
         call_args = self.mock_client.get.call_args
-        assert call_args[0][0] == "time_entries"
+        assert call_args[0][0] == "entries"
         params = call_args[0][1]
         assert params["project_id"] == 123
         assert params["start_date"] == "2024-01-01"
@@ -359,7 +359,7 @@ class TestTimeEntriesEndpoint:
         # Assert
         assert result == expected_response
         call_args = self.mock_client.post.call_args
-        assert call_args[0][0] == "time_entries"
+        assert call_args[0][0] == "entries"
         assert call_args[0][1] == expected_data
     
     def test_format_datetime(self):

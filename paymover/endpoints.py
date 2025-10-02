@@ -23,7 +23,7 @@ class ProjectsEndpoint:
         include: Optional[List[str]] = None,
         where: Optional[Dict[str, Any]] = None,
         page: Optional[int] = None,
-        per_page: Optional[int] = None
+        page_size: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """
         List all projects.
@@ -32,7 +32,7 @@ class ProjectsEndpoint:
             include: List of related resources to include
             where: Filter conditions
             page: Page number for pagination
-            per_page: Number of items per page
+            page_size: Number of items per page
             
         Returns:
             List of project dictionaries
@@ -44,8 +44,8 @@ class ProjectsEndpoint:
             params['where'] = self._build_where_clause(where)
         if page is not None:
             params['page'] = page
-        if per_page is not None:
-            params['per_page'] = per_page
+        if page_size is not None:
+            params['page_size'] = page_size
         
         return self.client.get('projects', params=params)
     
@@ -168,8 +168,6 @@ class ClientsEndpoint:
         self,
         include: Optional[List[str]] = None,
         where: Optional[Dict[str, Any]] = None,
-        page: Optional[int] = None,
-        per_page: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """List all clients."""
         params = {}
@@ -177,10 +175,6 @@ class ClientsEndpoint:
             params['include'] = ','.join(include)
         if where:
             params['where'] = self._build_where_clause(where)
-        if page is not None:
-            params['page'] = page
-        if per_page is not None:
-            params['per_page'] = per_page
         
         return self.client.get('clients', params=params)
     
@@ -329,7 +323,7 @@ class TasksEndpoint:
             raise ValueError(f"Invalid date format: {date_value}")
 
 
-class TimeEntriesEndpoint:
+class EntriesEndpoint:
     """High-level interface for time entry operations."""
     
     def __init__(self, client: PaymoClient):
@@ -344,7 +338,7 @@ class TimeEntriesEndpoint:
         end_date: Optional[Union[str, date, datetime]] = None,
         include: Optional[List[str]] = None,
         page: Optional[int] = None,
-        per_page: Optional[int] = None
+        page_size: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """List time entries with optional filters."""
         params = {}
@@ -363,8 +357,8 @@ class TimeEntriesEndpoint:
             params['include'] = ','.join(include)
         if page is not None:
             params['page'] = page
-        if per_page is not None:
-            params['per_page'] = per_page
+        if page_size is not None:
+            params['page_size'] = page_size
         
         return self.client.get('entries', params=params)
     

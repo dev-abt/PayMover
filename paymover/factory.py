@@ -15,7 +15,7 @@ from adapters import (
     DefaultRateLimitHandler,
     StandardLogger
 )
-from endpoints import ProjectsEndpoint, ClientsEndpoint, TasksEndpoint, TimeEntriesEndpoint
+from endpoints import ProjectsEndpoint, ClientsEndpoint, TasksEndpoint, EntriesEndpoint
 
 
 def create_client(
@@ -80,7 +80,7 @@ def create_client(
     client.projects = ProjectsEndpoint(client)
     client.clients = ClientsEndpoint(client)
     client.tasks = TasksEndpoint(client)
-    client.time_entries = TimeEntriesEndpoint(client)
+    client.entries = EntriesEndpoint(client)
     
     return client
 
@@ -141,7 +141,7 @@ def create_client_with_api_key(
     client.projects = ProjectsEndpoint(client)
     client.clients = ClientsEndpoint(client)
     client.tasks = TasksEndpoint(client)
-    client.time_entries = TimeEntriesEndpoint(client)
+    client.entries = EntriesEndpoint(client)
     
     return client
 
@@ -185,6 +185,6 @@ def create_custom_client(
     client.projects = ProjectsEndpoint(client)
     client.clients = ClientsEndpoint(client)
     client.tasks = TasksEndpoint(client)
-    client.time_entries = TimeEntriesEndpoint(client)
+    client.entries = EntriesEndpoint(client)
     
     return client

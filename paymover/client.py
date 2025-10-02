@@ -253,4 +253,6 @@ if __name__ == "__main__":
     client = create_client_with_api_key(api_key)
 
 
-    print(client.time_entries.list(project_id=2743968))
+    # from pprint import pprint; pprint(client.projects.list(where={'active': True}))
+
+    from pprint import pprint; pprint(client.entries.list(project_id=3438177))
